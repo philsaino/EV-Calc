@@ -14,6 +14,7 @@ Created with ⚡️ by [@philsaino](https://github.com/philsaino).
 * **Smart Bottleneck Calculation:** Automatically determines the real charging power by comparing your AC grid limit (Amps/Phases) with the car's On-Board Charger (OBC).
 * **Battery Chemistry Aware:** Supports both traditional (NMC/NCA) and LFP batteries, correctly adjusting the charging curve to account for the slowdown over 90% SoC (or lack thereof).
 * **Minute-by-Minute Cost Tracking:** Accurately splits charging costs across different time-of-use tariffs (F1, F2, F3) based on the specific hour and day of the week.
+* **Day Simulator:** Choose whether to run the calculation based on "Today" (Realtime logic) or force the simulation on a specific type of day (Weekday, Saturday, Sunday) to perfectly forecast your costs without being constrained by the current calendar day.
 * **Visual Cost Breakdown:** A dynamic, color-coded bar visually displays how your charging costs are distributed across your different time-of-use tariffs.
 * **Calendar Export (.ics):** With a single click, generate and download a native calendar event to remind you exactly when your car will finish charging.
 * **Range Estimation:** Calculates how many kilometers of range you are adding based on your car's average consumption and battery State of Health (SoH).
@@ -54,6 +55,7 @@ Creato con ⚡️ da [@philsaino](https://github.com/philsaino).
 * **Calcolo Intelligente dei Limiti:** Determina automaticamente la potenza di ricarica reale confrontando il limite della rete elettrica (Ampere/Fasi) con il caricatore di bordo (OBC) dell'auto.
 * **Gestione Chimica Batteria:** Supporta sia batterie tradizionali (NMC/NCA) che LFP, adattando la curva di ricarica per tenere conto del rallentamento oltre il 90% di SoC (se presente).
 * **Tracciamento Costi al Minuto:** Suddivide accuratamente i costi di ricarica tra le diverse fasce orarie (F1, F2, F3) in base all'ora specifica e al giorno della settimana.
+* **Simulatore Giorno:** Scegli se eseguire il calcolo basandoti su "Oggi" (usando le vere regole di calendario correnti) oppure forzare una simulazione specificando se l'avvio avverrà in un giorno Feriale, di Sabato o di Domenica, permettendoti un controllo e una stima totale.
 * **Grafico Costi Visivo:** Una barra progressiva dinamica e colorata mostra a colpo d'occhio come si distribuisce la spesa tra le varie fasce orarie della bolletta.
 * **Esportazione Calendario (.ics):** Con un solo clic, genera e scarica un evento di calendario nativo per ricordarti il momento esatto in cui scollegare l'auto.
 * **Stima Autonomia:** Calcola i chilometri di autonomia aggiunti in base al consumo medio dell'auto e allo stato di salute della batteria (SoH).
