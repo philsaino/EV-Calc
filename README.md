@@ -22,6 +22,12 @@ Created with ⚡️ by [@philsaino](https://github.com/philsaino).
 * **PWA & Mobile Native Feel:** Can be added to your iOS/Android Home Screen as a standalone web app with a custom generated App Icon, running perfectly in full-screen mode.
 * **Accessible & Robust:** Full semantic labeling for screen readers and built-in safe input clamping (e.g., prevents entering invalid SoC values) with elegant in-UI error handling.
 
+## 🕒 Time-of-Use Tariffs (Standard EU/IT)
+The app calculates costs minute-by-minute based on these standard time brackets:
+* **F1 (Peak):** Mon-Fri 08:00 - 19:00
+* **F2 (Mid-level):** Mon-Fri 07:00-08:00 & 19:00-23:00, Sat 07:00 - 23:00
+* **F3 (Off-peak):** Mon-Sat 23:00 - 07:00, Sun all day.
+
 ## 🚀 How to Use
 
 1. **[Open the Live App](https://philsaino.github.io/EV-Calc/)** directly in any modern web browser.
@@ -55,6 +61,12 @@ Creato con ⚡️ da [@philsaino](https://github.com/philsaino).
 * **UI & UX Avanzate:** Tema scuro/chiaro, salvataggio automatico delle preferenze, griglia CSS fluida e un comodo pulsante per copiare il report di ricarica negli appunti.
 * **Supporto PWA & iOS App:** Può essere aggiunta alla Schermata Home di iOS/Android comportandosi come un'app nativa a schermo intero con tanto di icona generata automaticamente.
 * **Accessibile e Sicura:** Etichette semantiche complete e gestione automatica degli input (impedisce l'inserimento di SoC impossibili) con avvisi di errore eleganti integrati nell'interfaccia.
+
+## 🕒 Fasce Orarie (Standard ARERA)
+L'app calcola i costi minuto per minuto basandosi sulle seguenti fasce orarie standard:
+* **F1 (Ore di punta):** Lun-Ven 08:00 - 19:00
+* **F2 (Ore intermedie):** Lun-Ven 07:00-08:00 e 19:00-23:00, Sab 07:00 - 23:00
+* **F3 (Ore fuori punta):** Lun-Sab 23:00 - 07:00, Domenica tutto il giorno.
 
 ## 🚀 Come si usa
 

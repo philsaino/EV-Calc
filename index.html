@@ -358,7 +358,16 @@
                 </div>
             </div>
 
-            <div class="grid-2">
+            <div class="grid-3">
+                <div class="input-group">
+                    <label for="startDay" data-i18n="startDayLbl">Giorno</label>
+                    <select id="startDay" onchange="savePreferences()">
+                        <option value="today" data-i18n="optToday">Oggi (Reale)</option>
+                        <option value="weekday" data-i18n="optWeekday">Lun - Ven</option>
+                        <option value="saturday" data-i18n="optSaturday">Sabato</option>
+                        <option value="sunday" data-i18n="optSunday">Domenica / Festivi</option>
+                    </select>
+                </div>
                 <div class="input-group">
                     <label for="startTime" data-i18n="startTimeLbl">Ora di Inizio</label>
                     <input type="time" id="startTime" value="22:00" onchange="savePreferences()">
@@ -375,15 +384,15 @@
 
             <div class="grid-3">
                 <div class="input-group">
-                    <label for="tariffF1">F1 (€/kWh)</label>
+                    <label for="tariffF1" style="color: var(--c-f1);">F1 (€/kWh)</label>
                     <input type="number" id="tariffF1" value="0.35" step="0.01" oninput="savePreferences()">
                 </div>
                 <div class="input-group">
-                    <label for="tariffF2">F2 (€/kWh)</label>
+                    <label for="tariffF2" style="color: var(--c-f2);">F2 (€/kWh)</label>
                     <input type="number" id="tariffF2" value="0.25" step="0.01" oninput="savePreferences()">
                 </div>
                 <div class="input-group">
-                    <label for="tariffF3">F3 (€/kWh)</label>
+                    <label for="tariffF3" style="color: var(--c-f3);">F3 (€/kWh)</label>
                     <input type="number" id="tariffF3" value="0.18" step="0.01" oninput="savePreferences()">
                 </div>
             </div>
@@ -435,6 +444,12 @@
                 <h4>📖 <span data-i18n="legendTitle">Legenda Sigle</span></h4>
                 <div class="legend-item"><strong data-i18n="legendSohTitle">SoH (State of Health):</strong> <span data-i18n="legendSohDesc">Lo stato di salute residuo della batteria rispetto al nuovo.</span></div>
                 <div class="legend-item"><strong data-i18n="legendConsTitle">Consumo Medio:</strong> <span data-i18n="legendConsDesc">Quanti kWh consuma l'auto per percorrere 100km. Serve per stimare i km recuperati.</span></div>
+                <div class="legend-item" style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border);">
+                    <strong data-i18n="legendTariffTitle">Fasce Orarie (Standard):</strong><br>
+                    <span style="color:var(--c-f1)">■</span> <strong data-i18n="lblF1">F1:</strong> <span data-i18n="descF1">Lun-Ven 08-19</span><br>
+                    <span style="color:var(--c-f2)">■</span> <strong data-i18n="lblF2">F2:</strong> <span data-i18n="descF2">Lun-Ven 07-08 / 19-23 e Sab 07-23</span><br>
+                    <span style="color:var(--c-f3)">■</span> <strong data-i18n="lblF3">F3:</strong> <span data-i18n="descF3">Lun-Sab 23-07 e Domenica tutto il giorno</span>
+                </div>
             </div>
         </div>
 
@@ -458,6 +473,11 @@
                 "avgCons": "Consumo Medio",
                 "acPlug": "Presa AC (Ampere & Fasi)",
                 "powerOut": "Potenza erogata:",
+                "startDayLbl": "Giorno Simulazione",
+                "optToday": "Oggi (Reale)",
+                "optWeekday": "Lun - Ven",
+                "optSaturday": "Sabato",
+                "optSunday": "Domenica / Festivi",
                 "startTimeLbl": "Ora di Inizio",
                 "effTemp": "Efficienza / Temp",
                 "tempOpt": "Ottimale (> 15°C)",
@@ -475,6 +495,13 @@
                 "legendSohDesc": "Lo stato di salute residuo della batteria rispetto al nuovo.",
                 "legendConsTitle": "Consumo Medio:",
                 "legendConsDesc": "Quanti kWh consuma l'auto per percorrere 100km. Serve per stimare i km recuperati.",
+                "legendTariffTitle": "Fasce Orarie (Standard):",
+                "lblF1": "F1 (Punta):",
+                "descF1": "Lun-Ven 08:00 - 19:00",
+                "lblF2": "F2 (Intermedie):",
+                "descF2": "Lun-Ven 07-08 / 19-23 e Sabato 07-23",
+                "lblF3": "F3 (Fuori Punta):",
+                "descF3": "Lun-Sab 23:00 - 07:00 e Domenica tutto il giorno",
                 "footerText": "Creato con ⚡️ da",
                 // Modes
                 "modeSoc": "Target %",
@@ -523,6 +550,11 @@
                 "avgCons": "Average Cons.",
                 "acPlug": "AC Plug (Amps & Phase)",
                 "powerOut": "Power output:",
+                "startDayLbl": "Simulation Day",
+                "optToday": "Today (Realtime)",
+                "optWeekday": "Mon - Fri",
+                "optSaturday": "Saturday",
+                "optSunday": "Sunday / Holiday",
                 "startTimeLbl": "Start Time",
                 "effTemp": "Efficiency / Temp",
                 "tempOpt": "Optimal (> 15°C)",
@@ -540,6 +572,13 @@
                 "legendSohDesc": "The remaining health capacity of the battery compared to when it was new.",
                 "legendConsTitle": "Average Consumption:",
                 "legendConsDesc": "How many kWh the car uses per 100km. Used to estimate recovered range.",
+                "legendTariffTitle": "Time-of-Use Tariffs:",
+                "lblF1": "F1 (Peak):",
+                "descF1": "Mon-Fri 08:00 - 19:00",
+                "lblF2": "F2 (Mid-level):",
+                "descF2": "Mon-Fri 07-08 / 19-23 and Sat 07-23",
+                "lblF3": "F3 (Off-peak):",
+                "descF3": "Mon-Sat 23:00 - 07:00 and Sun all day",
                 "footerText": "Made with ⚡️ by",
                 // Modes
                 "modeSoc": "Target %",
@@ -652,6 +691,7 @@
                 gridPhase: document.getElementById('gridPhase').value, efficiencyFactor: document.getElementById('efficiencyFactor').value,
                 tariffF1: document.getElementById('tariffF1').value, tariffF2: document.getElementById('tariffF2').value,
                 tariffF3: document.getElementById('tariffF3').value, startTime: document.getElementById('startTime').value,
+                startDay: document.getElementById('startDay').value,
                 lfpCheck: document.getElementById('lfpCheck').checked, isDark: document.body.classList.contains('dark-mode'),
                 lang: currentLang, mode: currentMode
             };
@@ -671,6 +711,7 @@
                 document.getElementById('gridPhase').value = prefs.gridPhase || '3'; document.getElementById('efficiencyFactor').value = prefs.efficiencyFactor || '0.9';
                 document.getElementById('tariffF1').value = prefs.tariffF1 || '0.35'; document.getElementById('tariffF2').value = prefs.tariffF2 || '0.25';
                 document.getElementById('tariffF3').value = prefs.tariffF3 || '0.18'; document.getElementById('startTime').value = prefs.startTime || '';
+                document.getElementById('startDay').value = prefs.startDay || 'today';
                 document.getElementById('lfpCheck').checked = (prefs.lfpCheck === true);
                 if (prefs.isDark) document.body.classList.add('dark-mode');
                 if (prefs.lang) currentLang = prefs.lang;
@@ -746,6 +787,7 @@
             const tariffF2 = parseFloat(document.getElementById('tariffF2').value) || 0;
             const tariffF3 = parseFloat(document.getElementById('tariffF3').value) || 0;
             const startTimeStr = document.getElementById('startTime').value;
+            const startDaySelection = document.getElementById('startDay').value;
             const gridPower = updateKwDisplay();
 
             if (!nominalCapacity || !gridPower || !obcPower || !startTimeStr) {
@@ -754,7 +796,25 @@
 
             let startH = parseInt(startTimeStr.split(':')[0]);
             let startM = parseInt(startTimeStr.split(':')[1]);
+            
+            // Handle Day Selection for Tariffs
             let startDate = new Date(); 
+            let currentDayNum = startDate.getDay();
+            
+            if (startDaySelection === 'weekday' && (currentDayNum === 0 || currentDayNum === 6)) {
+                // Force to Monday if it's weekend
+                let offset = currentDayNum === 0 ? 1 : 2;
+                startDate.setDate(startDate.getDate() + offset);
+            } else if (startDaySelection === 'saturday' && currentDayNum !== 6) {
+                // Force to next Saturday
+                let offset = (6 - currentDayNum + 7) % 7;
+                startDate.setDate(startDate.getDate() + offset);
+            } else if (startDaySelection === 'sunday' && currentDayNum !== 0) {
+                // Force to next Sunday
+                let offset = (7 - currentDayNum) % 7;
+                startDate.setDate(startDate.getDate() + offset);
+            }
+            
             startDate.setHours(startH, startM, 0, 0);
 
             return {
