@@ -1,6 +1,8 @@
 # 🔋 EV Calculator Pro Max
 
-A comprehensive, responsive, and bilingual (EN/IT) web application for calculating Electric Vehicle (EV) charging times, costs, and added range. It runs entirely in the browser with zero dependencies—just open the HTML file!
+A comprehensive, responsive, and bilingual (EN/IT) web application for calculating Electric Vehicle (EV) charging times, costs, and added range. It runs entirely in the browser with zero dependencies.
+
+**🌐 Live Demo:** [https://philsaino.github.io/EV-Calc/](https://philsaino.github.io/EV-Calc/)
 
 Created with ⚡️ by [@philsaino](https://github.com/philsaino).
 
@@ -22,8 +24,8 @@ Created with ⚡️ by [@philsaino](https://github.com/philsaino).
 
 ## 🚀 How to Use
 
-1. Clone the repository or simply download the `index.html` file.
-2. Open the file in any modern web browser (Chrome, Safari, Firefox, Edge).
+1. **[Open the Live App](https://philsaino.github.io/EV-Calc/)** directly in any modern web browser.
+2. *Alternatively:* Clone the repository or simply download the `index.html` file and open it locally.
 3. Select your car, input your grid limits, set your tariffs, and click **Calculate**.
 *Tip: On iOS Safari, tap "Share" and "Add to Home Screen" for a full-screen, native app experience!*
 
@@ -32,7 +34,9 @@ Created with ⚡️ by [@philsaino](https://github.com/philsaino).
 
 ## 🇮🇹 Panoramica (Italiano)
 
-Una web app completa, responsiva e bilingue (IT/EN) per calcolare i tempi di ricarica, i costi e l'autonomia recuperata per i veicoli elettrici (EV). Funziona interamente nel browser senza alcuna dipendenza: basta aprire il file HTML!
+Una web app completa, responsiva e bilingue (IT/EN) per calcolare i tempi di ricarica, i costi e l'autonomia recuperata per i veicoli elettrici (EV). Funziona interamente nel browser senza alcuna dipendenza.
+
+**🌐 Usa l'App Online:** [https://philsaino.github.io/EV-Calc/](https://philsaino.github.io/EV-Calc/)
 
 Creato con ⚡️ da [@philsaino](https://github.com/philsaino).
 
@@ -54,8 +58,8 @@ Creato con ⚡️ da [@philsaino](https://github.com/philsaino).
 
 ## 🚀 Come si usa
 
-1. Clona la repository o scarica semplicemente il file HTML.
-2. Apri il file in qualsiasi browser web moderno (Chrome, Safari, Firefox, Edge).
+1. **[Apri l'App Online](https://philsaino.github.io/EV-Calc/)** da qualsiasi browser web moderno.
+2. *In alternativa:* Clona la repository o scarica semplicemente il file HTML e aprilo in locale.
 3. Seleziona la tua auto, inserisci i parametri della tua presa, imposta le tariffe e clicca su **Calcola Ricarica**.
 *Tip: Su Safari per iOS, premi "Condividi" e "Aggiungi alla schermata Home" per usarla come una vera app nativa!*
 
