@@ -405,34 +405,48 @@
             ctx.fillStyle = '#2563eb';
             ctx.fillRect(0, 0, 256, 256);
 
+            // Battery dimensions and centering offset
+            const batW = 150;
+            const batH = 84;
+            const tipW = 12;
+            const tipH = 36;
+            // Total visual width is batW + tipW = 162
+            // Center X = (256 - 162) / 2 = 47
+            const batX = 47; 
+            const batY = (256 - batH) / 2; // 86
+
             // Battery Body
             ctx.strokeStyle = '#ffffff';
             ctx.lineWidth = 14;
             ctx.lineJoin = 'round';
-            ctx.strokeRect(36, 86, 160, 84);
+            ctx.strokeRect(batX, batY, batW, batH);
 
-            // Battery Tip
+            // Battery Tip (Positive Pole)
             ctx.fillStyle = '#ffffff';
             ctx.beginPath();
-            ctx.moveTo(196, 110);
-            ctx.lineTo(206, 110);
-            ctx.arcTo(214, 110, 214, 118, 8);
-            ctx.lineTo(214, 138);
-            ctx.arcTo(214, 146, 206, 146, 8);
-            ctx.lineTo(196, 146);
+            const tipX = batX + batW; // 197
+            const tipY = batY + (batH - tipH) / 2; // 86 + 24 = 110
+            ctx.moveTo(tipX, tipY);
+            ctx.lineTo(tipX + tipW - 4, tipY);
+            ctx.arcTo(tipX + tipW, tipY, tipX + tipW, tipY + 4, 4);
+            ctx.lineTo(tipX + tipW, tipY + tipH - 4);
+            ctx.arcTo(tipX + tipW, tipY + tipH, tipX + tipW - 4, tipY + tipH, 4);
+            ctx.lineTo(tipX, tipY + tipH);
             ctx.fill();
 
-            // Lightning Bolt
+            // Lightning Bolt (Centered perfectly inside the battery body)
+            // Center of battery body is batX + batW/2 = 47 + 75 = 122
             ctx.fillStyle = '#10b981';
             ctx.strokeStyle = '#ffffff';
             ctx.lineWidth = 8;
             ctx.beginPath();
-            ctx.moveTo(130, 56);
-            ctx.lineTo(86, 136);
-            ctx.lineTo(122, 136);
-            ctx.lineTo(106, 200);
-            ctx.lineTo(166, 116);
-            ctx.lineTo(130, 116);
+            // Start at top point, slightly shifted left for balance
+            ctx.moveTo(126, 60); 
+            ctx.lineTo(88, 136); 
+            ctx.lineTo(120, 136); 
+            ctx.lineTo(108, 196); 
+            ctx.lineTo(162, 116); 
+            ctx.lineTo(126, 116);
             ctx.closePath();
             ctx.fill();
             ctx.stroke();
