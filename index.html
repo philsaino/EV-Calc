@@ -132,6 +132,7 @@
             text-overflow: ellipsis;
         }
 
+        /* Generic styles for text/number/time inputs and selects */
         input:not([type="checkbox"]), select {
             display: block;
             width: 100%;
@@ -147,15 +148,9 @@
             -webkit-appearance: none;
         }
 
-        /* Ensure checkboxes keep their native look */
-        input[type="checkbox"] {
-            appearance: auto;
-            -webkit-appearance: checkbox;
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-            accent-color: var(--primary);
-            flex-shrink: 0;
+        /* Specific fix for iOS time input */
+        input[type="time"] {
+            min-width: 0;
         }
 
         input:focus, select:focus {
@@ -176,21 +171,34 @@
         .checkbox-group {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             margin-top: 5px;
             background: var(--details-bg);
-            padding: 10px;
+            padding: 12px;
             border-radius: 10px;
         }
 
+        /* Targeted styling for the LFP checkbox to bypass global 'appearance: none' */
         .checkbox-group input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
+            appearance: checkbox !important;
+            -webkit-appearance: checkbox !important;
+            width: 22px !important;
+            height: 22px !important;
+            margin: 0;
             cursor: pointer;
             accent-color: var(--primary);
+            display: inline-block;
         }
 
-        .checkbox-group label { margin: 0; font-weight: normal; cursor: pointer; font-size: 0.9rem; }
+        .checkbox-group label { 
+            margin: 0; 
+            font-weight: normal; 
+            cursor: pointer; 
+            font-size: 0.95rem; 
+            display: inline;
+            white-space: normal;
+            overflow: visible;
+        }
 
         button.main-btn {
             width: 100%;
@@ -396,7 +404,7 @@
                 </select>
                 
                 <div class="checkbox-group">
-                    <input type="checkbox" id="lfpCheck" onchange="savePreferences()">
+                    <input type="checkbox" id="lfpCheck" onchange="toggleLfp()">
                     <label for="lfpCheck"><strong data-i18n="lfpTitle">Batteria LFP</strong> <span data-i18n="lfpDesc">(No rallentamento finale)</span></label>
                 </div>
             </div>
@@ -658,6 +666,14 @@
             if (document.getElementById('result').style.display === 'block') {
                 calculateAdvanced();
             }
+        }
+
+        function toggleLfp() {
+            // Se il risultato è già visibile, ricalcola subito
+            if (document.getElementById('result').style.display === 'block') {
+                calculateAdvanced();
+            }
+            savePreferences();
         }
 
         // Apply localization to static DOM elements
