@@ -93,8 +93,19 @@
 
         .icon-btn:hover { border-color: var(--primary); }
 
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+        /* Grid settings with bottom alignment to prevent uneven boxes */
+        .grid-2 { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 15px; 
+            align-items: end; 
+        }
+        .grid-3 { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr 1fr; 
+            gap: 10px; 
+            align-items: end; 
+        }
 
         .input-group { margin-bottom: 1rem; }
         .full-width { grid-column: span 2; }
@@ -125,6 +136,7 @@
         }
 
         .flex-row { display: flex; gap: 10px; align-items: center; }
+        .flex-row input, .flex-row select { flex: 1; }
 
         .realtime-kw {
             font-size: 0.85rem; 
@@ -290,6 +302,38 @@
 
         .site-footer a:hover {
             text-decoration: underline;
+        }
+
+        /* ---- RESPONSIVE MOBILE FIXES ---- */
+        @media (max-width: 550px) {
+            .container {
+                padding: 1.5rem 1.2rem; /* Riduce i margini per gli schermi piccoli */
+            }
+            .header-top {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            .header-buttons {
+                justify-content: center;
+                width: 100%;
+            }
+            h2 {
+                font-size: 1.6rem;
+            }
+            .grid-3 {
+                grid-template-columns: 1fr 1fr; /* Evita schiacciamenti passando da 3 a 2 colonne */
+            }
+            .full-width {
+                grid-column: 1 / -1; /* Reset della larghezza totale per evitare sbordature */
+            }
+        }
+
+        @media (max-width: 380px) {
+            /* Per gli smartphone molto stretti (es. vecchi iPhone), impila tutto verticalmente */
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
