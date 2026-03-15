@@ -107,7 +107,12 @@
             align-items: end; 
         }
 
-        .input-group { margin-bottom: 1rem; }
+        .input-group { 
+            margin-bottom: 1rem;
+            width: 100%; 
+            box-sizing: border-box; 
+        }
+        
         .full-width { grid-column: span 2; }
 
         label {
@@ -119,6 +124,8 @@
 
         input, select {
             width: 100%;
+            max-width: 100%; /* Fix for iOS input rendering bug */
+            min-width: 0; /* Fix for CSS Grid shrinking */
             padding: 10px;
             border: 2px solid var(--border);
             border-radius: 10px;
@@ -135,8 +142,8 @@
             outline: none;
         }
 
-        .flex-row { display: flex; gap: 10px; align-items: center; }
-        .flex-row input, .flex-row select { flex: 1; }
+        .flex-row { display: flex; gap: 10px; align-items: center; width: 100%; }
+        .flex-row input, .flex-row select { flex: 1; min-width: 0; }
 
         .realtime-kw {
             font-size: 0.85rem; 
@@ -270,6 +277,7 @@
             border-radius: 10px;
             font-size: 0.9rem;
             line-height: 1.6;
+            word-break: break-word; /* Prevent text overflow on small screens */
         }
 
         .legend-box {
@@ -307,7 +315,7 @@
         /* ---- RESPONSIVE MOBILE FIXES ---- */
         @media (max-width: 550px) {
             .container {
-                padding: 1.5rem 1.2rem; /* Riduce i margini per gli schermi piccoli */
+                padding: 1.5rem 1.2rem;
             }
             .header-top {
                 flex-direction: column;
@@ -336,7 +344,7 @@
         }
 
         @media (max-width: 400px) {
-            /* Per gli smartphone molto stretti, mettiamo tutto a 1 colonna */
+            /* Fallback per schermi ultra-compatti */
             .grid-3 {
                 grid-template-columns: 1fr;
             }
