@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="it" id="htmlTag">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EV Calculator Pro Max</title>
+    <style>
+        /* CSS Variables for Light/Dark themes */
+        :root {
+            --primary: #2563eb;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --border: #e2e8f0;
+            --input-bg: #ffffff;
+            --details-bg: #f1f5f9;
+        }
+
+        body.dark-mode {
+            --primary: #3b82f6;
+            --bg: #0f172a;
+            --card: #1e293b;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --input-bg: #0f172a;
+            --details-bg: #334155;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .app-wrapper {
+            width: 100%;
+            max-width: 550px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            background-color: var(--card);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.2);
+            width: 100%;
+            box-sizing: border-box;
+            position: relative;
+            transition: background-color 0.3s;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        h2 { margin: 0; color: var(--primary); }
+
+        .icon-btn {
+            background: none;
+            border: 2px solid var(--border);
+            color: var(--text);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .icon-btn:hover { border-color: var(--primary); }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+
+        .input-group { margin-bottom: 1rem; }
+        .full-width { grid-column: span 2; }
+
+        label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: 0.2s;
+            background: var(--input-bg);
+            color: var(--text);
+            color-scheme: light dark;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        .flex-row { display: flex; gap: 10px; align-items: center; }
+
+        .realtime-kw {
+            font-size: 0.85rem; 
+            color: var(--primary); 
+            margin-top: 6px; 
+            font-weight: bold;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 5px;
+            background: var(--details-bg);
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        .checkbox-group label { margin: 0; font-weight: normal; cursor: pointer; font-size: 0.9rem; }
+
+        button.main-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+            transition: 0.2s;
+        }
+
+        button.main-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
+        }
+        
+        button.secondary-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: 0.2s;
+        }
+        
+        button.secondary-btn:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        #result {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px dashed var(--border);
+            display: none;
+        }
+
+        .time-display {
+            font-size: 2.2rem;
+            font-weight: 800;
+            text-align: center;
+            color: var(--text);
+            line-height: 1.2;
+        }
+        
+        .cost-display {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            color: var(--success);
+            margin-bottom: 0.5rem;
+        }
+        
+        .range-display {
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .time-label {
+            font-size: 1rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-weight: normal;
+        }
+
+        .ready-time {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 24px;
+            background-color: var(--border);
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            display: flex;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-start { background-color: var(--text-muted); height: 100%; }
+        .progress-charge { background-color: var(--success); height: 100%; transition: width 0.5s ease-in-out; }
+        .progress-slow { background-color: var(--warning); height: 100%; transition: width 0.5s ease-in-out; }
+
+        .details-list {
+            background: var(--details-bg);
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .legend-box {
+            margin-top: 2rem;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        
+        .legend-box h4 { margin: 0 0 0.5rem 0; color: var(--text); }
+        .legend-item { margin-bottom: 0.4rem; }
+        .small-note { font-size: 0.75rem; color: var(--text-muted); display: block; margin-top: 4px; }
+
+        /* Footer styling */
+        .site-footer {
+            margin-top: 1.5rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .site-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .site-footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-wrapper">
+        <div class="container">
+            <div class="header-top">
+                <h2 data-i18n="appTitle">🔋 Calcolatore EV Pro Max</h2>
+                <div class="header-buttons">
+                    <button class="icon-btn" onclick="toggleLanguage()" id="langBtn">🇬🇧 EN</button>
+                    <button class="icon-btn" onclick="toggleTheme()" data-i18n="themeBtn">🌓 Tema</button>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label data-i18n="selectCar">Seleziona Veicolo (Database)</label>
+                <select id="carDb" onchange="loadCarData()">
+                    <option value="custom" data-i18n="optCustom">-- Inserimento Manuale --</option>
+                    <option value="tesla_m3_rwd_26" data-cap="60" data-obc="11" data-lfp="true" data-cons="13.5" selected>Tesla Model 3 RWD (2026) - LFP</option>
+                    <option value="tesla_my_lr" data-cap="75" data-obc="11" data-lfp="false" data-cons="16.0">Tesla Model Y Long Range</option>
+                    <option value="vw_id3_pro" data-cap="58" data-obc="11" data-lfp="false" data-cons="15.5">VW ID.3 Pro (58 kWh)</option>
+                    <option value="mg4_standard" data-cap="51" data-obc="6.6" data-lfp="true" data-cons="16.5">MG4 Standard Range - LFP</option>
+                    <option value="fiat_500e" data-cap="42" data-obc="11" data-lfp="false" data-cons="14.0">Fiat 500e (42 kWh)</option>
+                </select>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="lfpCheck" onchange="savePreferences()">
+                    <label for="lfpCheck"><strong data-i18n="lfpTitle">Batteria LFP</strong> <span data-i18n="lfpDesc">(No rallentamento finale)</span></label>
+                </div>
+            </div>
+            
+            <div class="grid-3">
+                <div class="input-group">
+                    <label data-i18n="batteryCap">Batteria (kWh)</label>
+                    <input type="number" id="capacity" placeholder="60" step="1" oninput="savePreferences()">
+                </div>
+                <div class="input-group">
+                    <label data-i18n="sohTitle">SoH Salute (%)</label>
+                    <input type="number" id="soh" value="100" min="1" max="100" oninput="savePreferences()">
+                </div>
+                <div class="input-group">
+                    <label>OBC (kW)</label>
+                    <input type="number" id="obcPower" placeholder="11" step="0.1" oninput="savePreferences()">
+                </div>
+            </div>
+
+            <div class="grid-3">
+                <div class="input-group">
+                    <label>Start SoC (%)</label>
+                    <input type="number" id="startPct" value="20" min="0" max="99" oninput="savePreferences()">
+                </div>
+                <div class="input-group">
+                    <label>Target SoC (%)</label>
+                    <input type="number" id="endPct" value="100" min="1" max="100" oninput="savePreferences()">
+                </div>
+                <div class="input-group">
+                    <label data-i18n="avgCons">Consumo Medio</label>
+                    <input type="number" id="consumption" value="13.5" step="0.1" oninput="savePreferences()">
+                    <span class="small-note">kWh/100km</span>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="input-group full-width">
+                    <label data-i18n="acPlug">Presa AC (Ampere & Fasi)</label>
+                    <div class="flex-row">
+                        <input type="number" id="gridAmps" value="16" placeholder="es. 16" step="1" oninput="updateKwDisplay(); savePreferences()">
+                        <select id="gridPhase" onchange="updateKwDisplay(); savePreferences()">
+                            <option value="1">Mono</option>
+                            <option value="3" selected>Tri</option>
+                        </select>
+                    </div>
+                    <div class="realtime-kw"><span data-i18n="powerOut">Potenza erogata:</span> <span id="calcKwDisplay">0.0</span> kW</div>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="input-group">
+                    <label data-i18n="startTimeLbl">Ora di Inizio</label>
+                    <input type="time" id="startTime" value="22:00" onchange="savePreferences()">
+                </div>
+                <div class="input-group">
+                    <label data-i18n="effTemp">Efficienza / Temp</label>
+                    <select id="efficiencyFactor" onchange="savePreferences()">
+                        <option value="0.9" data-i18n="tempOpt">Ottimale (> 15°C)</option>
+                        <option value="0.8" data-i18n="tempCold">Freddo (0°C - 10°C)</option>
+                        <option value="0.7" data-i18n="tempFreeze">Gelo (< 0°C)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid-3">
+                <div class="input-group">
+                    <label>F1 (€/kWh)</label>
+                    <input type="number" id="tariffF1" value="0.35" step="0.01" oninput="savePreferences()">
+                </div>
+                <div class="input-group">
+                    <label>F2 (€/kWh)</label>
+                    <input type="number" id="tariffF2" value="0.25" step="0.01" oninput="savePreferences()">
+                </div>
+                <div class="input-group">
+                    <label>F3 (€/kWh)</label>
+                    <input type="number" id="tariffF3" value="0.18" step="0.01" oninput="savePreferences()">
+                </div>
+            </div>
+
+            <button class="main-btn" onclick="calculateAdvanced()" data-i18n="calcBtn">Calcola Ricarica</button>
+
+            <div id="result">
+                <div class="time-label" data-i18n="estTime">Tempo Stimato</div>
+                <div class="time-display" id="timeDisplay">--:--</div>
+                <div class="ready-time" id="readyTimeDisplay">--</div>
+                
+                <div class="cost-display" id="costDisplay">€ --</div>
+                <div class="range-display" id="rangeDisplay">--</div>
+
+                <div class="progress-container">
+                    <div id="barStart" class="progress-start"></div>
+                    <div id="barCharge" class="progress-charge"></div>
+                    <div id="barSlow" class="progress-slow"></div>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-top: -10px; margin-bottom: 15px; color: var(--text-muted);">
+                    <span>0%</span>
+                    <span><span style="color:var(--success)">■</span> <span data-i18n="lblFast">Veloce</span> <span style="color:var(--warning)">■</span> <span data-i18n="lblSlow">Lenta</span></span>
+                    <span>100%</span>
+                </div>
+
+                <div class="details-list" id="detailsList"></div>
+                
+                <button class="secondary-btn" onclick="copyReport()" id="copyBtn">📋 <span data-i18n="copyBtn">Copia Report Ricarica</span></button>
+            </div>
+
+            <div class="legend-box">
+                <h4>📖 <span data-i18n="legendTitle">Legenda Sigle</span></h4>
+                <div class="legend-item"><strong data-i18n="legendSohTitle">SoH (State of Health):</strong> <span data-i18n="legendSohDesc">Lo stato di salute residuo della batteria rispetto al nuovo.</span></div>
+                <div class="legend-item"><strong data-i18n="legendConsTitle">Consumo Medio:</strong> <span data-i18n="legendConsDesc">Quanti kWh consuma l'auto per percorrere 100km. Serve per stimare i km recuperati.</span></div>
+            </div>
+        </div>
+
+        <div class="site-footer">
+            <span data-i18n="footerText">Creato con ⚡️ da</span> <a href="https://github.com/philsaino" target="_blank">@philsaino</a> &copy; 2026
+        </div>
+    </div>
+
+    <script>
+        // Translations Dictionary
+        const i18n = {
+            "it": {
+                "appTitle": "🔋 Calcolatore EV Pro Max",
+                "themeBtn": "🌓 Tema",
+                "selectCar": "Seleziona Veicolo (Database)",
+                "optCustom": "-- Inserimento Manuale --",
+                "lfpTitle": "Batteria LFP",
+                "lfpDesc": "(No rallentamento finale)",
+                "batteryCap": "Batteria (kWh)",
+                "sohTitle": "SoH Salute (%)",
+                "avgCons": "Consumo Medio",
+                "acPlug": "Presa AC (Ampere & Fasi)",
+                "powerOut": "Potenza erogata:",
+                "startTimeLbl": "Ora di Inizio",
+                "effTemp": "Efficienza / Temp",
+                "tempOpt": "Ottimale (> 15°C)",
+                "tempCold": "Freddo (0°C - 10°C)",
+                "tempFreeze": "Gelo (< 0°C)",
+                "calcBtn": "Calcola Ricarica",
+                "estTime": "Tempo Stimato",
+                "lblFast": "Veloce",
+                "lblSlow": "Lenta",
+                "copyBtn": "Copia Report Ricarica",
+                "legendTitle": "Legenda Sigle",
+                "legendSohTitle": "SoH (State of Health):",
+                "legendSohDesc": "Lo stato di salute residuo della batteria rispetto al nuovo.",
+                "legendConsTitle": "Consumo Medio:",
+                "legendConsDesc": "Quanti kWh consuma l'auto per percorrere 100km. Serve per stimare i km recuperati.",
+                "footerText": "Creato con ⚡️ da",
+                // Dynamic texts
+                "readyAt": "Pronta alle",
+                "tomorrow": " di domani",
+                "inDays": " tra {d} giorni",
+                "rangeAdded": "+ {km} km di autonomia",
+                "energyMeter": "Energia prelevata (Contatore):",
+                "costF1": "Spesa in F1:",
+                "costF2": "Spesa in F2:",
+                "costF3": "Spesa in F3:",
+                "realEnergy": "Energia effettiva in batteria:",
+                "lfpActive": "✓ Profilo LFP attivo (Nessun calo di potenza)",
+                "lfpWarn": "⚠ Rallentamento curva dopo il 90%",
+                "alertFields": "Compila tutti i campi principali.",
+                "alertSoc": "Start SoC deve essere inferiore a Target SoC.",
+                "reportTitle": "🔋 Report Ricarica EV",
+                "reportFrom": "Da",
+                "reportTo": "A",
+                "reportTime": "⏱ Tempo",
+                "reportReady": "✅ Pronta alle",
+                "reportCost": "💶 Costo stimato",
+                "reportRange": "🛣 Autonomia aggiunta",
+                "reportEnergy": "⚡️ Energia al contatore",
+                "copied": "✅ Copiato negli appunti!"
+            },
+            "en": {
+                "appTitle": "🔋 EV Calculator Pro Max",
+                "themeBtn": "🌓 Theme",
+                "selectCar": "Select Vehicle (Database)",
+                "optCustom": "-- Manual Entry --",
+                "lfpTitle": "LFP Battery",
+                "lfpDesc": "(No final charging slowdown)",
+                "batteryCap": "Battery (kWh)",
+                "sohTitle": "SoH Health (%)",
+                "avgCons": "Average Cons.",
+                "acPlug": "AC Plug (Amps & Phase)",
+                "powerOut": "Power output:",
+                "startTimeLbl": "Start Time",
+                "effTemp": "Efficiency / Temp",
+                "tempOpt": "Optimal (> 15°C)",
+                "tempCold": "Cold (0°C - 10°C)",
+                "tempFreeze": "Freezing (< 0°C)",
+                "calcBtn": "Calculate Charging",
+                "estTime": "Estimated Time",
+                "lblFast": "Fast",
+                "lblSlow": "Slow",
+                "copyBtn": "Copy Charge Report",
+                "legendTitle": "Acronyms Legend",
+                "legendSohTitle": "SoH (State of Health):",
+                "legendSohDesc": "The remaining health capacity of the battery compared to when it was new.",
+                "legendConsTitle": "Average Consumption:",
+                "legendConsDesc": "How many kWh the car uses per 100km. Used to estimate recovered range.",
+                "footerText": "Made with ⚡️ by",
+                // Dynamic texts
+                "readyAt": "Ready at",
+                "tomorrow": " tomorrow",
+                "inDays": " in {d} days",
+                "rangeAdded": "+ {km} km added range",
+                "energyMeter": "Energy drawn (Grid meter):",
+                "costF1": "Cost in F1:",
+                "costF2": "Cost in F2:",
+                "costF3": "Cost in F3:",
+                "realEnergy": "Effective energy in battery:",
+                "lfpActive": "✓ LFP profile active (No power drop)",
+                "lfpWarn": "⚠ Curve slowdown after 90%",
+                "alertFields": "Please fill in all main fields.",
+                "alertSoc": "Start SoC must be lower than Target SoC.",
+                "reportTitle": "🔋 EV Charging Report",
+                "reportFrom": "From",
+                "reportTo": "To",
+                "reportTime": "⏱ Time",
+                "reportReady": "✅ Ready at",
+                "reportCost": "💶 Estimated cost",
+                "reportRange": "🛣 Added range",
+                "reportEnergy": "⚡️ Grid energy",
+                "copied": "✅ Copied to clipboard!"
+            }
+        };
+
+        let currentLang = 'it';
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        let reportString = "";
+        
+        // Initialize App on load
+        window.onload = function() {
+            loadPreferences();
+            applyLanguage(currentLang);
+            updateKwDisplay();
+            
+            // Set current time if not loaded from preferences
+            if (!document.getElementById('startTime').value) {
+                const now = new Date();
+                const hh = String(now.getHours()).padStart(2, '0');
+                const mm = String(now.getMinutes()).padStart(2, '0');
+                document.getElementById('startTime').value = `${hh}:${mm}`;
+            }
+        };
+
+        // UI toggles
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            savePreferences();
+        }
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'it' ? 'en' : 'it';
+            applyLanguage(currentLang);
+            savePreferences();
+            
+            // Recalculate if result is visible to update dynamic strings
+            if (document.getElementById('result').style.display === 'block') {
+                calculateAdvanced();
+            }
+        }
+
+        // Apply localization to static DOM elements
+        function applyLanguage(lang) {
+            document.getElementById('htmlTag').lang = lang;
+            const btn = document.getElementById('langBtn');
+            btn.innerText = lang === 'it' ? '🇬🇧 EN' : '🇮🇹 IT';
+
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[lang][key]) {
+                    el.innerHTML = i18n[lang][key];
+                }
+            });
+        }
+
+        // Return a translated string by key
+        function getT(key) {
+            return i18n[currentLang][key] || key;
+        }
+
+        // Local storage management
+        function savePreferences() {
+            const settings = {
+                carDb: document.getElementById('carDb').value,
+                capacity: document.getElementById('capacity').value,
+                soh: document.getElementById('soh').value,
+                obcPower: document.getElementById('obcPower').value,
+                startPct: document.getElementById('startPct').value,
+                endPct: document.getElementById('endPct').value,
+                consumption: document.getElementById('consumption').value,
+                gridAmps: document.getElementById('gridAmps').value,
+                gridPhase: document.getElementById('gridPhase').value,
+                efficiencyFactor: document.getElementById('efficiencyFactor').value,
+                tariffF1: document.getElementById('tariffF1').value,
+                tariffF2: document.getElementById('tariffF2').value,
+                tariffF3: document.getElementById('tariffF3').value,
+                startTime: document.getElementById('startTime').value,
+                lfpCheck: document.getElementById('lfpCheck').checked,
+                isDark: document.body.classList.contains('dark-mode'),
+                lang: currentLang
+            };
+            localStorage.setItem('ev_calculator_prefs_v2', JSON.stringify(settings));
+        }
+
+        function loadPreferences() {
+            const saved = localStorage.getItem('ev_calculator_prefs_v2');
+            if (saved) {
+                const prefs = JSON.parse(saved);
+                document.getElementById('carDb').value = prefs.carDb || 'custom';
+                document.getElementById('capacity').value = prefs.capacity || '';
+                document.getElementById('soh').value = prefs.soh || '100';
+                document.getElementById('obcPower').value = prefs.obcPower || '';
+                document.getElementById('startPct').value = prefs.startPct || '20';
+                document.getElementById('endPct').value = prefs.endPct || '100';
+                document.getElementById('consumption').value = prefs.consumption || '13.5';
+                document.getElementById('gridAmps').value = prefs.gridAmps || '16';
+                document.getElementById('gridPhase').value = prefs.gridPhase || '3';
+                document.getElementById('efficiencyFactor').value = prefs.efficiencyFactor || '0.9';
+                document.getElementById('tariffF1').value = prefs.tariffF1 || '0.35';
+                document.getElementById('tariffF2').value = prefs.tariffF2 || '0.25';
+                document.getElementById('tariffF3').value = prefs.tariffF3 || '0.18';
+                document.getElementById('startTime').value = prefs.startTime || '';
+                document.getElementById('lfpCheck').checked = prefs.lfpCheck || false;
+                
+                if (prefs.isDark) document.body.classList.add('dark-mode');
+                if (prefs.lang) currentLang = prefs.lang;
+            } else {
+                if (prefersDark) document.body.classList.add('dark-mode');
+                loadCarData();
+            }
+        }
+
+        function loadCarData() {
+            const select = document.getElementById('carDb');
+            const opt = select.options[select.selectedIndex];
+            if (opt.value !== 'custom') {
+                document.getElementById('capacity').value = opt.getAttribute('data-cap');
+                document.getElementById('obcPower').value = opt.getAttribute('data-obc');
+                document.getElementById('consumption').value = opt.getAttribute('data-cons');
+                document.getElementById('lfpCheck').checked = (opt.getAttribute('data-lfp') === 'true');
+                document.getElementById('soh').value = '100'; 
+            }
+            savePreferences();
+        }
+
+        function updateKwDisplay() {
+            const amps = parseFloat(document.getElementById('gridAmps').value) || 0;
+            const phase = parseInt(document.getElementById('gridPhase').value);
+            const kw = (amps * 230 * phase) / 1000;
+            document.getElementById('calcKwDisplay').innerText = kw.toFixed(1);
+            return kw;
+        }
+
+        function copyReport() {
+            navigator.clipboard.writeText(reportString).then(() => {
+                const btn = document.getElementById('copyBtn');
+                btn.innerHTML = getT('copied');
+                setTimeout(() => { btn.innerHTML = `📋 <span data-i18n="copyBtn">${getT('copyBtn')}</span>`; }, 2000);
+            });
+        }
+
+        // Main Calculation Engine
+        function calculateAdvanced() {
+            const nominalCapacity = parseFloat(document.getElementById('capacity').value);
+            const sohPct = parseFloat(document.getElementById('soh').value) || 100;
+            const startPct = parseFloat(document.getElementById('startPct').value);
+            const endPct = parseFloat(document.getElementById('endPct').value);
+            const obcPower = parseFloat(document.getElementById('obcPower').value);
+            const consumption = parseFloat(document.getElementById('consumption').value) || 15;
+            const effFactor = parseFloat(document.getElementById('efficiencyFactor').value);
+            const isLfp = document.getElementById('lfpCheck').checked;
+            
+            const tariffF1 = parseFloat(document.getElementById('tariffF1').value) || 0;
+            const tariffF2 = parseFloat(document.getElementById('tariffF2').value) || 0;
+            const tariffF3 = parseFloat(document.getElementById('tariffF3').value) || 0;
+            const startTimeStr = document.getElementById('startTime').value;
+            const gridPower = updateKwDisplay();
+
+            if (!nominalCapacity || !gridPower || !obcPower || !startTimeStr) {
+                alert(getT('alertFields')); return;
+            }
+            if (startPct >= endPct) {
+                alert(getT('alertSoc')); return;
+            }
+
+            const capacity = nominalCapacity * (sohPct / 100);
+            let nominalChargingPower = Math.min(gridPower, obcPower);
+            let realChargingPower = nominalChargingPower * effFactor;
+
+            const slowThreshold = isLfp ? 100 : 90; 
+            const slowFactor = 2.5; 
+            let totalHours = 0, fastKwhNeeded = 0, slowKwhNeeded = 0, fastPctSpan = 0, slowPctSpan = 0;
+
+            if (endPct <= slowThreshold) {
+                fastPctSpan = endPct - startPct;
+                fastKwhNeeded = capacity * (fastPctSpan / 100);
+                totalHours = fastKwhNeeded / realChargingPower;
+            } else if (startPct >= slowThreshold) {
+                slowPctSpan = endPct - startPct;
+                slowKwhNeeded = capacity * (slowPctSpan / 100);
+                totalHours = slowKwhNeeded / (realChargingPower / slowFactor);
+            } else {
+                fastPctSpan = slowThreshold - startPct;
+                fastKwhNeeded = capacity * (fastPctSpan / 100);
+                let timeFast = fastKwhNeeded / realChargingPower;
+
+                slowPctSpan = endPct - slowThreshold;
+                slowKwhNeeded = capacity * (slowPctSpan / 100);
+                let timeSlow = slowKwhNeeded / (realChargingPower / slowFactor);
+
+                totalHours = timeFast + timeSlow;
+            }
+
+            const totalKwhAddedToBattery = fastKwhNeeded + slowKwhNeeded;
+            const totalEnergyFromGrid = totalKwhAddedToBattery / effFactor; 
+            const addedKm = (totalKwhAddedToBattery / consumption) * 100;
+
+            const totalMinutes = Math.round(totalHours * 60);
+            let startH = parseInt(startTimeStr.split(':')[0]);
+            let startM = parseInt(startTimeStr.split(':')[1]);
+            let startDate = new Date(); 
+            startDate.setHours(startH, startM, 0, 0);
+            
+            let currentTempDate = new Date(startDate.getTime());
+            let energyPerMinute = totalEnergyFromGrid / totalMinutes;
+            let costF1 = 0, costF2 = 0, costF3 = 0;
+
+            for (let i = 0; i < totalMinutes; i++) {
+                let currentHour = currentTempDate.getHours();
+                let currentDay = currentTempDate.getDay(); 
+
+                if (currentDay === 0) {
+                    costF3 += energyPerMinute * tariffF3;
+                } else if (currentDay >= 1 && currentDay <= 5) {
+                    if (currentHour >= 8 && currentHour < 19) costF1 += energyPerMinute * tariffF1;
+                    else if (currentHour === 7 || (currentHour >= 19 && currentHour < 23)) costF2 += energyPerMinute * tariffF2;
+                    else costF3 += energyPerMinute * tariffF3;
+                } else if (currentDay === 6) {
+                    if (currentHour >= 7 && currentHour < 23) costF2 += energyPerMinute * tariffF2;
+                    else costF3 += energyPerMinute * tariffF3;
+                }
+                currentTempDate.setMinutes(currentTempDate.getMinutes() + 1);
+            }
+            
+            const totalCost = costF1 + costF2 + costF3;
+
+            const daysDiff = Math.floor((currentTempDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+            let endDayStr = "";
+            if (daysDiff === 1) endDayStr = getT('tomorrow');
+            else if (daysDiff > 1) endDayStr = getT('inDays').replace('{d}', daysDiff);
+            
+            let endHStr = String(currentTempDate.getHours()).padStart(2, '0');
+            let endMStr = String(currentTempDate.getMinutes()).padStart(2, '0');
+            let readyTimeFormatted = `${endHStr}:${endMStr}${endDayStr}`;
+
+            const hrs = Math.floor(totalHours);
+            const mins = Math.round((totalHours - hrs) * 60);
+            let finalH = hrs;
+            let finalM = mins;
+            if (finalM === 60) { finalH++; finalM = 0; }
+            const minString = finalM < 10 ? '0' + finalM : finalM;
+            let durationFormatted = `${finalH}h ${minString}m`;
+
+            // UI Update
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('timeDisplay').innerText = durationFormatted;
+            document.getElementById('readyTimeDisplay').innerText = `${getT('readyAt')} ${readyTimeFormatted}`;
+            document.getElementById('costDisplay').innerText = `€ ${totalCost.toFixed(2)}`;
+            document.getElementById('rangeDisplay').innerText = getT('rangeAdded').replace('{km}', Math.round(addedKm));
+            
+            document.getElementById('barStart').style.width = startPct + '%';
+            document.getElementById('barCharge').style.width = fastPctSpan + '%';
+            document.getElementById('barSlow').style.width = slowPctSpan + '%';
+
+            let costDetailsHTML = `${getT('energyMeter')} <strong>${totalEnergyFromGrid.toFixed(1)} kWh</strong><br>`;
+            if (costF1 > 0) costDetailsHTML += `${getT('costF1')} <strong>€ ${costF1.toFixed(2)}</strong><br>`;
+            if (costF2 > 0) costDetailsHTML += `${getT('costF2')} <strong>€ ${costF2.toFixed(2)}</strong><br>`;
+            if (costF3 > 0) costDetailsHTML += `${getT('costF3')} <strong>€ ${costF3.toFixed(2)}</strong><br>`;
+
+            document.getElementById('detailsList').innerHTML = `
+                ${costDetailsHTML}
+                ${getT('realEnergy')} <strong>${totalKwhAddedToBattery.toFixed(1)} kWh</strong><br>
+                <em>${isLfp ? getT('lfpActive') : getT('lfpWarn')}</em>
+            `;
+            
+            // Build export report
+            reportString = `${getT('reportTitle')}\n`;
+            reportString += `${getT('reportFrom')}: ${startPct}% -> ${getT('reportTo')}: ${endPct}%\n`;
+            reportString += `${getT('reportTime')}: ${durationFormatted}\n`;
+            reportString += `${getT('reportReady')}: ${readyTimeFormatted}\n`;
+            reportString += `${getT('reportCost')}: € ${totalCost.toFixed(2)}\n`;
+            reportString += `${getT('reportRange')}: ~${Math.round(addedKm)} km\n`;
+            reportString += `${getT('reportEnergy')}: ${totalEnergyFromGrid.toFixed(1)} kWh`;
+
+            savePreferences();
+        }
+    </script>
+</body>
+</html>
