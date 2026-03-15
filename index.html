@@ -132,7 +132,7 @@
             text-overflow: ellipsis;
         }
 
-        input, select {
+        input:not([type="checkbox"]), select {
             display: block;
             width: 100%;
             padding: 10px;
@@ -147,9 +147,15 @@
             -webkit-appearance: none;
         }
 
-        /* Specific fix for iOS time input */
-        input[type="time"] {
-            min-width: 0;
+        /* Ensure checkboxes keep their native look */
+        input[type="checkbox"] {
+            appearance: auto;
+            -webkit-appearance: checkbox;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: var(--primary);
+            flex-shrink: 0;
         }
 
         input:focus, select:focus {
@@ -716,7 +722,9 @@
                 document.getElementById('tariffF2').value = prefs.tariffF2 || '0.25';
                 document.getElementById('tariffF3').value = prefs.tariffF3 || '0.18';
                 document.getElementById('startTime').value = prefs.startTime || '';
-                document.getElementById('lfpCheck').checked = prefs.lfpCheck || false;
+                
+                // Forza il valore booleano per la checkbox
+                document.getElementById('lfpCheck').checked = (prefs.lfpCheck === true);
                 
                 if (prefs.isDark) document.body.classList.add('dark-mode');
                 if (prefs.lang) currentLang = prefs.lang;
@@ -733,7 +741,10 @@
                 document.getElementById('capacity').value = opt.getAttribute('data-cap');
                 document.getElementById('obcPower').value = opt.getAttribute('data-obc');
                 document.getElementById('consumption').value = opt.getAttribute('data-cons');
-                document.getElementById('lfpCheck').checked = (opt.getAttribute('data-lfp') === 'true');
+                
+                // Aggiorna checkbox LFP in base al database veicoli
+                const isLfp = opt.getAttribute('data-lfp') === 'true';
+                document.getElementById('lfpCheck').checked = isLfp;
                 document.getElementById('soh').value = '100'; 
             }
             savePreferences();
