@@ -321,17 +321,23 @@
             h2 {
                 font-size: 1.6rem;
             }
+            /* Stack grid-2 elements vertically to prevent overlap */
+            .grid-2 {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            /* Reduce grid-3 to 2 columns to save space */
             .grid-3 {
-                grid-template-columns: 1fr 1fr; /* Evita schiacciamenti passando da 3 a 2 colonne */
+                grid-template-columns: 1fr 1fr;
             }
             .full-width {
-                grid-column: 1 / -1; /* Reset della larghezza totale per evitare sbordature */
+                grid-column: 1 / -1; 
             }
         }
 
-        @media (max-width: 380px) {
-            /* Per gli smartphone molto stretti (es. vecchi iPhone), impila tutto verticalmente */
-            .grid-2, .grid-3 {
+        @media (max-width: 400px) {
+            /* Per gli smartphone molto stretti, mettiamo tutto a 1 colonna */
+            .grid-3 {
                 grid-template-columns: 1fr;
             }
         }
