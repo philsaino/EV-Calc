@@ -11,10 +11,9 @@
     <meta name="apple-mobile-web-app-title" content="EV Calc">
     <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)">
-    
-    <!-- Favicon & iOS App Icon SVG inline -->
+
+    <!-- Favicon SVG inline (per Desktop/Android) -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Crect width='256' height='256' rx='50' fill='%232563eb'/%3E%3Crect x='36' y='86' width='160' height='84' rx='12' fill='none' stroke='%23ffffff' stroke-width='14'/%3E%3Cpath d='M196,110 h10 a8,8 0 0 1 8,8 v20 a8,8 0 0 1 -8,8 h-10 z' fill='%23ffffff'/%3E%3Cpolygon points='130,56 86,136 122,136 106,200 166,116 130,116' fill='%2310b981' stroke='%23ffffff' stroke-width='8' stroke-linejoin='round'/%3E%3C/svg%3E">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Crect width='256' height='256' fill='%232563eb'/%3E%3Crect x='36' y='86' width='160' height='84' rx='12' fill='none' stroke='%23ffffff' stroke-width='14'/%3E%3Cpath d='M196,110 h10 a8,8 0 0 1 8,8 v20 a8,8 0 0 1 -8,8 h-10 z' fill='%23ffffff'/%3E%3Cpolygon points='130,56 86,136 122,136 106,200 166,116 130,116' fill='%2310b981' stroke='%23ffffff' stroke-width='8' stroke-linejoin='round'/%3E%3C/svg%3E">
 
     <style>
         /* CSS Variables for Light/Dark themes */
@@ -133,7 +132,7 @@
             width: 100%; 
             min-width: 0; /* Critical fix for Grid items overflow */
         }
-        
+
         .full-width { grid-column: 1 / -1; }
 
         label {
@@ -247,7 +246,7 @@
             transform: translateY(-2px);
             box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
         }
-        
+
         button.secondary-btn {
             width: 100%;
             padding: 10px;
@@ -261,7 +260,7 @@
             margin-top: 1rem;
             transition: 0.2s;
         }
-        
+
         button.secondary-btn:hover {
             background-color: var(--primary);
             color: white;
@@ -281,7 +280,7 @@
             color: var(--text);
             line-height: 1.2;
         }
-        
+
         .cost-display {
             font-size: 1.5rem;
             font-weight: 700;
@@ -289,7 +288,7 @@
             color: var(--success);
             margin-bottom: 0.5rem;
         }
-        
+
         .range-display {
             font-size: 1.2rem;
             font-weight: 600;
@@ -345,7 +344,7 @@
             font-size: 0.85rem;
             color: var(--text-muted);
         }
-        
+
         .legend-box h4 { margin: 0 0 0.5rem 0; color: var(--text); }
         .legend-item { margin-bottom: 0.4rem; }
         .small-note { font-size: 0.75rem; color: var(--text-muted); display: block; margin-top: 4px; }
@@ -394,7 +393,57 @@
     </style>
 </head>
 <body>
+    <script>
+        // iOS Hack: Generate standard PNG Apple Touch Icon at runtime 
+        (function() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 256;
+            canvas.height = 256;
+            const ctx = canvas.getContext('2d');
 
+            // Background
+            ctx.fillStyle = '#2563eb';
+            ctx.fillRect(0, 0, 256, 256);
+
+            // Battery Body
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 14;
+            ctx.lineJoin = 'round';
+            ctx.strokeRect(36, 86, 160, 84);
+
+            // Battery Tip
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.moveTo(196, 110);
+            ctx.lineTo(206, 110);
+            ctx.arcTo(214, 110, 214, 118, 8);
+            ctx.lineTo(214, 138);
+            ctx.arcTo(214, 146, 206, 146, 8);
+            ctx.lineTo(196, 146);
+            ctx.fill();
+
+            // Lightning Bolt
+            ctx.fillStyle = '#10b981';
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 8;
+            ctx.beginPath();
+            ctx.moveTo(130, 56);
+            ctx.lineTo(86, 136);
+            ctx.lineTo(122, 136);
+            ctx.lineTo(106, 200);
+            ctx.lineTo(166, 116);
+            ctx.lineTo(130, 116);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+
+            // Inject link tag into head
+            const link = document.createElement('link');
+            link.rel = 'apple-touch-icon';
+            link.href = canvas.toDataURL('image/png'); // Safari needs standard PNG
+            document.head.appendChild(link);
+        })();
+    </script>
     <div class="app-wrapper">
         <div class="container">
             <div class="header-top">
