@@ -30,6 +30,11 @@
             --details-bg: #334155;
         }
 
+        /* Global box-sizing for better layout control */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Segoe UI', system-ui, sans-serif;
             background-color: var(--bg);
@@ -42,6 +47,7 @@
             margin: 0;
             padding: 20px;
             transition: background-color 0.3s, color 0.3s;
+            overflow-x: hidden; /* Prevent accidental horizontal scroll */
         }
 
         .app-wrapper {
@@ -58,7 +64,6 @@
             border-radius: 20px;
             box-shadow: 0 20px 40px -10px rgba(0,0,0,0.2);
             width: 100%;
-            box-sizing: border-box;
             position: relative;
             transition: background-color 0.3s;
         }
@@ -99,18 +104,20 @@
             grid-template-columns: 1fr 1fr; 
             gap: 15px; 
             align-items: end; 
+            width: 100%;
         }
         .grid-3 { 
             display: grid; 
             grid-template-columns: 1fr 1fr 1fr; 
             gap: 10px; 
             align-items: end; 
+            width: 100%;
         }
 
         .input-group { 
             margin-bottom: 1rem;
             width: 100%; 
-            box-sizing: border-box; 
+            min-width: 0; /* Critical fix for Grid items overflow */
         }
         
         .full-width { grid-column: span 2; }
@@ -120,21 +127,29 @@
             margin-bottom: 0.4rem;
             font-size: 0.9rem;
             font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         input, select {
+            display: block;
             width: 100%;
-            max-width: 100%; /* Fix for iOS input rendering bug */
-            min-width: 0; /* Fix for CSS Grid shrinking */
             padding: 10px;
             border: 2px solid var(--border);
             border-radius: 10px;
             font-size: 1rem;
-            box-sizing: border-box;
             transition: 0.2s;
             background: var(--input-bg);
             color: var(--text);
             color-scheme: light dark;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        /* Specific fix for iOS time input */
+        input[type="time"] {
+            min-width: 0;
         }
 
         input:focus, select:focus {
